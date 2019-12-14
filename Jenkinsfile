@@ -11,7 +11,7 @@ pipeline {
         stage ('Compile Stage') {
 
             steps {
-                withMaven(maven : 'LocalMaven') {
+                withMaven(jdk: 'Java1_8', maven: 'LocalMaven') {
                     sh 'mvn clean compile'
                 }
             }
@@ -20,7 +20,7 @@ pipeline {
         stage ('Testing Stage') {
 
             steps {
-                withMaven(maven : 'LocalMaven') {
+                withMaven(jdk: 'Java1_8', maven: 'LocalMaven')  {
                     sh 'mvn test'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
 
         stage ('install Stage') {
             steps {
-                withMaven(maven : 'LocalMaven') {
+                withMaven(jdk: 'Java1_8', maven: 'LocalMaven')  {
                     sh 'mvn install'
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
              steps {
                 sshagent(['tomcat_ssh'])
 							{
-  							sh ' scp -o StrictHostKeyChecking=no */target/*.war ec2-user@<172.31.39.44>:/var/lib/tomcat/webapps'
+  							sh ' scp -o StrictHostKeyChecking=no */target/*.war ec2-user@<172.31.34.123>:/var/lib/tomcat/webapps'
 							}	
              }
    }
